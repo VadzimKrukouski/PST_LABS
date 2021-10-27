@@ -1,4 +1,4 @@
-package org.krukouski.pstlabs.applicationName.models;
+package org.krukouski.pstlabs.pst_labs.models;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,7 +17,8 @@ public class Film {
     @OneToMany
     private List<Genre> genres;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "director_id")
     private Director director;
 
     public long getId() {

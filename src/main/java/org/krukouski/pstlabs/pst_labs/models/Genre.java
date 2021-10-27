@@ -1,21 +1,19 @@
-package org.krukouski.pstlabs.applicationName.models;
+package org.krukouski.pstlabs.pst_labs.models;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name = "directors")
-public class Director {
+@Table(name = "genres")
+public class Genre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String name;
 
-    private int age;
-
-    @OneToMany
-    private List<Film> films;
+    @ManyToOne
+    @JoinColumn (name = "film_id")
+    private Film film;
 
     public long getId() {
         return id;
@@ -33,29 +31,20 @@ public class Director {
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
+    public Film getFilm() {
+        return film;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public List<Film> getFilms() {
-        return films;
-    }
-
-    public void setFilms(List<Film> films) {
-        this.films = films;
+    public void setFilm(Film film) {
+        this.film = film;
     }
 
     @Override
     public String toString() {
-        return "Director{" +
+        return "Genre{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", age=" + age +
-                ", films=" + films +
+                ", film=" + film +
                 '}';
     }
 }
