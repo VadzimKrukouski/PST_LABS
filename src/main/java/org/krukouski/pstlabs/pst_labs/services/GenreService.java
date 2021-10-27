@@ -3,6 +3,8 @@ package org.krukouski.pstlabs.pst_labs.services;
 import org.krukouski.pstlabs.pst_labs.models.Genre;
 import org.krukouski.pstlabs.pst_labs.repositories.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -17,8 +19,8 @@ public class GenreService {
         this.genreRepository = genreRepository;
     }
 
-    public Collection<Genre> getAll(){
-        return genreRepository.findAll();
+    public Page<Genre> getAll(PageRequest pageRequest){
+        return genreRepository.findAll(pageRequest);
     }
 
     public Optional<Genre> getGenreById(Long id){

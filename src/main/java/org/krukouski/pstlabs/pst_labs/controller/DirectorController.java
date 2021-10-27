@@ -1,49 +1,62 @@
 package org.krukouski.pstlabs.pst_labs.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.krukouski.pstlabs.pst_labs.models.Director;
 import org.krukouski.pstlabs.pst_labs.services.DirectorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/directors")
+@RequestMapping("api/directors")
 public class DirectorController {
     @Autowired
     private DirectorService directorService;
 
+    @Operation(summary = "Get all directors pageable")
     @GetMapping
-    public String getDirectors(Model model){
-        Collection<Director> directors = directorService.getAll();
-        model.addAttribute("directors", directors);
-        return "directors/index";
+    public ResponseEntity<List<Director>> getDirectors(Model model,
+                                                       @RequestParam(defaultValue = "0") int page,
+                                                       @RequestParam(defaultValue = "10") int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Director> pageDirectors = directorService.getAll(pageRequest);
+        List<Director> directors = pageDirectors.getContent();
+        return new ResponseEntity<>(directors, HttpStatus.OK);
     }
 
+    @Operation(summary = "Get director by id")
     @GetMapping("/{id}")
-    public  String getDirector(@PathVariable (name = "id") Long id, Model model){
+    public ResponseEntity<Director> getDirector(@PathVariable(name = "id") Long id, Model model) {
         Optional<Director> directorById = directorService.getDirectorById(id);
-        model.addAttribute("director", directorById.get());
-        return "directors/show";
+        Director director = directorById.get();
+        return new ResponseEntity<>(director, HttpStatus.OK);
     }
 
+    @Operation(summary = "Create director")
     @PostMapping
-    public String saveDirector(@RequestBody Director director){
-        directorService.save(director);
-        return "directors/index";
+    public ResponseEntity<Director> saveDirector(@RequestBody Director director) {
+        Director saveDirector = directorService.save(director);
+        return new ResponseEntity<>(saveDirector, HttpStatus.OK);
     }
 
-    @DeleteMapping("/id")
-    public String deleteDirector(@PathVariable(name = "id")Long id){
+    @Operation(summary = "Delete director")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Director> deleteDirector(@PathVariable(name = "id") Long id) {
         directorService.delete(id);
-        return "directors/index";
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/id")
-    public String updateDirector(@RequestBody Director director, @PathVariable(name = "id") Long id){
-        directorService.update(director,id);
-        return "directors/index";
+    @Operation(summary = "update director")
+    @PutMapping("/{id}")
+    public ResponseEntity<Director> updateDirector(@RequestBody Director director, @PathVariable(name = "id") Long id) {
+        Director updateDirector = directorService.update(director, id);
+        return new ResponseEntity<>(updateDirector, HttpStatus.OK);
     }
 }

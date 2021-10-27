@@ -1,6 +1,8 @@
 package org.krukouski.pstlabs.pst_labs.repositories;
 
 import org.krukouski.pstlabs.pst_labs.models.Genre;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Collection;
@@ -14,7 +16,7 @@ public interface GenreRepository extends PagingAndSortingRepository<Genre, Long>
     Optional<Genre> findById(Long id);
 
     @Override
-    Collection<Genre> findAll();
+    Page<Genre> findAll(Pageable pageable);
 
     @Override
     void deleteById(Long id);

@@ -3,6 +3,8 @@ package org.krukouski.pstlabs.pst_labs.services;
 import org.krukouski.pstlabs.pst_labs.models.Director;
 import org.krukouski.pstlabs.pst_labs.repositories.DirectorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -17,8 +19,8 @@ public class DirectorService {
         this.directorRepository = directorRepository;
     }
 
-    public Collection<Director> getAll(){
-        return directorRepository.findAll();
+    public Page<Director> getAll(PageRequest pageRequest){
+        return directorRepository.findAll(pageRequest);
     }
 
     public Optional<Director> getDirectorById(Long id){
