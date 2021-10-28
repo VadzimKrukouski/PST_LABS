@@ -1,6 +1,7 @@
 package org.krukouski.pstlabs.pst_labs.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.krukouski.pstlabs.pst_labs.models.Genre;
 import org.krukouski.pstlabs.pst_labs.services.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +9,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
+@Tag(name = "GenreController", description = "Operations for work to Genre")
 @RestController
 @RequestMapping("api/genres")
 public class GenreController {
@@ -22,8 +23,7 @@ public class GenreController {
 
     @Operation(summary = "Get all directors pageable")
     @GetMapping
-    public ResponseEntity<List<Genre>> getGenre(Model model,
-                                                @RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<List<Genre>> getGenre(@RequestParam(defaultValue = "0") int page,
                                                 @RequestParam(defaultValue = "10") int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<Genre> pageGenres = genreService.getAll(pageRequest);
@@ -33,7 +33,7 @@ public class GenreController {
 
     @Operation(summary = "Get genre by id")
     @GetMapping("/{id}")
-    public ResponseEntity<Genre> getGenre(@PathVariable(name = "id") Long id, Model model) {
+    public ResponseEntity<Genre> getGenre(@PathVariable(name = "id") Long id) {
         Optional<Genre> genreById = genreService.getGenreById(id);
         Genre genre = genreById.get();
         return new ResponseEntity<>(genre, HttpStatus.OK);

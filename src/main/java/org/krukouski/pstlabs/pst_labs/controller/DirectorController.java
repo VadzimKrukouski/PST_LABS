@@ -1,8 +1,7 @@
 package org.krukouski.pstlabs.pst_labs.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.krukouski.pstlabs.pst_labs.models.Director;
 import org.krukouski.pstlabs.pst_labs.services.DirectorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +9,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
+@Tag(name = "DirectorController", description = "Operations for work to Director")
 @RestController
 @RequestMapping("api/directors")
 public class DirectorController {
@@ -24,8 +23,7 @@ public class DirectorController {
 
     @Operation(summary = "Get all directors pageable")
     @GetMapping
-    public ResponseEntity<List<Director>> getDirectors(Model model,
-                                                       @RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<List<Director>> getDirectors(@RequestParam(defaultValue = "0") int page,
                                                        @RequestParam(defaultValue = "10") int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<Director> pageDirectors = directorService.getAll(pageRequest);
@@ -35,7 +33,7 @@ public class DirectorController {
 
     @Operation(summary = "Get director by id")
     @GetMapping("/{id}")
-    public ResponseEntity<Director> getDirector(@PathVariable(name = "id") Long id, Model model) {
+    public ResponseEntity<Director> getDirector(@PathVariable(name = "id") Long id) {
         Optional<Director> directorById = directorService.getDirectorById(id);
         Director director = directorById.get();
         return new ResponseEntity<>(director, HttpStatus.OK);
