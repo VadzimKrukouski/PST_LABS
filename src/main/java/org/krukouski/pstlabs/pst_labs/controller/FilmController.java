@@ -60,8 +60,6 @@ public class FilmController {
         Film updateFilm = filmService.update(film, id);
         return new ResponseEntity<>(updateFilm, HttpStatus.OK);
     }
-
-
 }
 
 

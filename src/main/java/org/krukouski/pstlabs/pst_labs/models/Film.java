@@ -10,11 +10,13 @@ public class Film {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
     private String description;
 
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="film")
     private List<Genre> genres;
 
     @ManyToOne

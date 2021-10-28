@@ -1,5 +1,7 @@
 package org.krukouski.pstlabs.pst_labs.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import org.krukouski.pstlabs.pst_labs.models.Director;
 import org.krukouski.pstlabs.pst_labs.services.DirectorService;

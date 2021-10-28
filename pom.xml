@@ -13,14 +13,10 @@
   <artifactId>PST-Labs</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>PST-Labs</name>
+  <packaging>war</packaging>
   <description>Test task for PSTLabs</description>
 
   <properties>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
-    <maven.tomcat.url>http://localhost:8080/manager/text</maven.tomcat.url>
-    <maven.tomcat.server>TomcatServer8</maven.tomcat.server>
-    <maven.tomcat.path>/${project.build.finalName}</maven.tomcat.path>
     <java.version>11</java.version>
   </properties>
 
@@ -45,6 +41,7 @@
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
@@ -56,20 +53,61 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.xml.bind</groupId>
+      <artifactId>jaxb-api</artifactId>
+      <version>2.3.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-boot-starter</artifactId>
+      <version>3.0.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger2</artifactId>
+      <version>3.0.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger-ui</artifactId>
+      <version>2.9.2</version>
+    </dependency>
   </dependencies>
 
   <build>
     <plugins>
       <plugin>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <url>http://localhost:8080/api/pst_labs</url>
+          <server>TomcatServer</server>
+          <path>/api/pst_labs</path>
+        </configuration>
+      </plugin>
+
+      <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
+
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
-                <source>8</source>
-                <target>8</target>
+                <source>11</source>
+                <target>11</target>
             </configuration>
         </plugin>
     </plugins>
